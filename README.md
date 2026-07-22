@@ -70,10 +70,12 @@ pip install -r requirements.txt
 
 ```python
 # DA-DLV3+ 注意力配置
-use_dcn   = True     # 可变形卷积 (DeformASPP + DeformDecoder)
 use_dapsa = False    # DAPSA 方向感知极化自注意力
 use_cbam  = False    # CBAM 通道+空间注意力
 use_ca    = True     # 浅层CA坐标注意力
+
+# 核心改进：可变形卷积（不属于注意力）
+use_dcn   = True     # DCNv2 (DeformASPP + DeformDecoder)
 
 # 损失函数
 focal_loss = True    # Focal Loss
