@@ -66,34 +66,51 @@ pip install -r requirements.txt
 
 ### 训练
 
-在 `train.py` 中配置注意力模块：
+本文方法以 MobileNetV2 为骨干（加载 Pascal VOC 预训练权重），
+通过可变形卷积（DCNv2）赋予多尺度特征几何自适应能力，
+以方向感知极化自注意力（DAPSA）增强深层全局方向语义，
+配合浅层坐标注意力（CA）捕获精确空间位置信息，构建跨层级协作机制。
+
+在 `train.py` 中关键配置：
 
 ```python
-# DA-DLV3+ 注意力配置
-use_dapsa = False    # DAPSA 方向感知极化自注意力
-use_cbam  = False    # CBAM 通道+空间注意力
-use_ca    = True     # 浅层CA坐标注意力
+# 可变形卷积配置（几何结构适配）
+use_dcn   = True     # 引入 DCNv2，构建 DeformASPP 双路径加权融合
 
-# 核心改进：可变形卷积（不属于注意力）
-use_dcn   = True     # DCNv2 (DeformASPP + DeformDecoder)
+# DA-DLV3+ 注意力配置（跨层级语义协同）
+use_dapsa = True     # DAPSA 方向感知极化自注意力（深层全局语义增强）
+use_ca    = True     # 浅层 CA 坐标注意力（低阶定位 → 与深层 DAPSA 协作）
 
 # 损失函数
-focal_loss = True    # Focal Loss
-dice_loss  = True    # Dice Loss
+focal_loss = True    # Focal Loss（抑制类别不均衡，降低易样本权重）
+dice_loss  = True    # Dice Loss（优化区域重叠程度，兼顾像素与区域一致性）
+# 若两者同时开启：total_loss = focal_loss + dice_loss
 ```
+
+**论文训练协议**：
+
+| 参数 | 设置 |
+|------|------|
+| 优化器 | Adam，初始学习率 5×10⁻⁴ |
+| 学习率衰减 | Cosine annealing → 最小 5×10⁻⁶ |
+| Batch size | 8 |
+| Epochs | 100（全程端到端，不冻结骨干） |
+| 输入尺寸 | 512 × 512 |
+| 数据增强 | 随机缩放 0.25–2.0×、水平翻转 50%、色彩抖动 |
+| 随机种子 | seed = 11（PyTorch / NumPy / CUDA） |
 
 **推荐配置**：
 
-| 配置 | 说明 |
-|------|------|
-| `use_dcn=True, use_ca=True` | 轻量版，DCN + 浅层CA |
-| `use_dcn=True, use_dapsa=True, use_ca=True` | 完整DA-DLV3+ |
+| 配置 | 说明 | mIoU |
+|------|------|------|
+| `use_dcn=True, use_ca=True` | DCN + 浅层CA（轻量版） | — |
+| `use_dcn=True, use_dapsa=True, use_ca=True` | 完整 DA-DLV3+ | 72.09% |
 
 ```bash
 python train.py
 ```
 
-训练日志和权重保存在 `logs/` 目录下。
+权重保存在 `logs/` 目录下。
 
 ### 预测
 
