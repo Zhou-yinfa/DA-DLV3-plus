@@ -99,13 +99,6 @@ dice_loss  = True    # Dice Loss（优化区域重叠程度，兼顾像素与区
 | 数据增强 | 随机缩放 0.25–2.0×、水平翻转 50%、色彩抖动 |
 | 随机种子 | seed = 11（PyTorch / NumPy / CUDA） |
 
-**推荐配置**：
-
-| 配置 | 说明 | mIoU |
-|------|------|------|
-| `use_dcn=True, use_ca=True` | DCN + 浅层CA（轻量版） | — |
-| `use_dcn=True, use_dapsa=True, use_ca=True` | 完整 DA-DLV3+ | 72.09% |
-
 ```bash
 python train.py
 ```
