@@ -26,7 +26,7 @@ class DeeplabV3(object):
         #   验证集损失较低不代表miou较高，仅代表该权值在验证集上泛化性能较好。
         #-------------------------------------------------------------------#
         #"model_path"        : 'model_data/deeplab_mobilenetv2.pth',
-        "model_path" :"D:\地物变化检测-项目\Deeplabv3-plus\logs_补充\\1Baseline_CE\last_epoch_weights.pth",
+        "model_path" :"logs/last_epoch_weights.pth",
         #----------------------------------------#
         #   所需要区分的类的个数+1
         #----------------------------------------#

@@ -25,22 +25,32 @@ Low-level → shortcut_conv → [浅层CA] --------┘→ Cat → Decoder → Ou
 
 ---
 
-## 🗂️ 数据集准备
+## 🗂️ 实验数据集
 
-采用 **VOC格式** 数据集。
+本实验使用自制的 **VOC2025** 高分辨率遥感语义分割数据集，源影像为高分二号（GF-2）卫星数字正射影像，空间分辨率 0.8 m，研究区位于中国江苏省南通市通州区。包含 **5 类前景地物**（水系、林地、道路、种植土地、建（构）筑物）**+ 1 类背景**，共计 1802 张 512×512 像素瓦片，已按约 7:2:1 划分。
+
+📦 **百度网盘**：[https://pan.baidu.com/s/18KPdYeWqoycbUvzI3ByqHw?pwd=zyfz](https://pan.baidu.com/s/18KPdYeWqoycbUvzI3ByqHw?pwd=zyfz) 提取码：`zyfz`
+
+解压后得到如下 VOC 格式目录结构：
 
 ```
 VOCdevkit/
-└── VOC2007/
-    ├── JPEGImages/         # 输入图像 (.jpg)
-    ├── SegmentationClass/  # 标签图像 (.png, 像素值=类别ID)
-    ├── ImageSets/
-    │   └── Segmentation/
-    │       ├── train.txt   # 训练集文件列表
-    │       └── val.txt     # 验证集文件列表
-    └── SegmentationClassRaw/  # 原始标签（用于生成JSON）
+└── VOC2025/
+    ├── JPEGImages/                      # 输入图像 (.jpg, 1802张)
+    ├── SegmentationClass/               # 单通道标签 (.png, 像素值=类别ID)
+    ├── SegmentationClass_color/         # 彩色可视化标签
+    └── ImageSets/
+        └── Segmentation/
+            ├── train.txt                # 训练集 (1261张)
+            ├── val.txt                  # 验证集 (360张)
+            └── test.txt                 # 测试集  (181张)
 ```
 
+直接放入项目根目录下的 `VOCdevkit/VOC2025/` 即可开始训练。`num_classes` 设置为 **6**（5 类前景 + 1 背景）。
+
+### 自定义数据集
+
+若需使用自己的数据集：
 1. 将图片放入 `JPEGImages/`，标签放入 `SegmentationClass/`
 2. 修改 `voc_annotation.py` 中的类别名称后运行，生成 `train.txt` 和 `val.txt`
 3. 修改 `train.py` 中的 `num_classes` 为**类别数 + 1**（含背景）
