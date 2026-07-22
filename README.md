@@ -172,6 +172,8 @@ DA-DLV3+
 本项目基于以下开源工作：
 
 - [DeepLabV3+ (bubbliiiing)](https://github.com/bubbliiiing/deeplabv3-plus-pytorch) — DeepLabV3+实现的PyTorch基础框架
+- [pytorch_segmentation](https://github.com/ggyyzm/pytorch_segmentation) — bubbliiiing 仓库的参考基准
+- [keras-deeplab-v3-plus](https://github.com/bonlime/keras-deeplab-v3-plus) — DeepLabV3+ 的 Keras 实现原型
 - [DCNv2](https://arxiv.org/abs/1811.11168) — Deformable ConvNets v2 (Zhu et al., CVPR 2019)
 - [CBAM](https://arxiv.org/abs/1807.06521) — Convolutional Block Attention Module (Woo et al., ECCV 2018)
 - [Coordinate Attention](https://arxiv.org/abs/2103.02907) — Hou et al., CVPR 2021
