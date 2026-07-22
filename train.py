@@ -96,7 +96,7 @@ if __name__ == "__main__":
     use_dcn         = True       # 可变形卷积
     use_dapsa       = True      # DAPSA 方向感知极化自注意力
     use_ca          = True       # CA 坐标注意力（作用于浅层）
-    #use_cbam        = False      # CBAM 注意力
+    use_cbam        = False      # CBAM 注意力
     #---------------------------------#
     #   所使用的的主干网络：
     #   mobilenet
