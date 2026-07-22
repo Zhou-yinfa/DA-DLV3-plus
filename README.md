@@ -1,6 +1,6 @@
-# DA-DLV3+: 基于可变形卷积与注意力机制增强的DeepLabV3+遥感地物分割
+# DA-DLV3+：一种用于高分辨率遥感图像分割的几何-语义协同 DeepLabV3+架构
 
-> **Deformable Attention-enhanced DeepLabV3+ for Remote Sensing Land Cover Segmentation**
+> **DA-DLV3+: A Geometry-Semantic Collaborative DeepLabV3+ Architecture for High-Resolution Remote Sensing Image Segmentation**
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.7+-ee4c2c.svg)](https://pytorch.org/)
